@@ -1,40 +1,56 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useState } from 'react'
+import { getSessionUser } from './api/mockClient'
+import AppShell from './components/AppShell'
+import AuthScreen from './screens/AuthScreen'
+import CreateTripScreen from './screens/CreateTripScreen'
+import DashboardScreen from './screens/DashboardScreen'
+import ItineraryBuilderScreen from './screens/ItineraryBuilderScreen'
+import MyTripsScreen from './screens/MyTripsScreen'
+import ProfileScreen from './screens/ProfileScreen'
+import './voyage.css'
 
 function App() {
-  const [pingResult, setPingResult] = useState(null)
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(() => getSessionUser())
+  const [trip, setTrip] = useState(null)
+  const [screen, setScreen] = useState('dashboard')
 
-  useEffect(() => {
-    fetch('/api/ping')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setPingResult(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        setError(err.message)
-        setLoading(false)
-      })
-  }, [])
+  function handleNavigate(next) {
+    if (next === 'itinerary' && !trip) {
+      setScreen('create')
+      return
+    }
+    setScreen(next)
+  }
+
+  if (!user) {
+    return <AuthScreen onAuthenticated={setUser} />
+  }
 
   return (
-    <main className="app">
-      <h1>GlobeTrotter</h1>
-      <p>Frontend ↔ backend connection check</p>
-
-      {loading && <p>Calling GET /api/ping…</p>}
-      {error && <p className="error">Error: {error}</p>}
-      {pingResult && (
-        <pre className="ping-result">{JSON.stringify(pingResult, null, 2)}</pre>
+    <AppShell user={user} active={screen} onNavigate={handleNavigate}>
+      {screen === 'dashboard' && (
+        <DashboardScreen user={user} trip={trip} onNavigate={handleNavigate} />
       )}
-    </main>
+      {screen === 'trips' && (
+        <MyTripsScreen
+          onOpenTrip={(nextTrip) => {
+            setTrip(nextTrip)
+            setScreen('itinerary')
+          }}
+          onCreateTrip={() => setScreen('create')}
+        />
+      )}
+      {screen === 'create' && (
+        <CreateTripScreen
+          onCreated={(nextTrip) => {
+            setTrip(nextTrip)
+            setScreen('itinerary')
+          }}
+        />
+      )}
+      {screen === 'itinerary' && trip && <ItineraryBuilderScreen trip={trip} />}
+      {screen === 'profile' && <ProfileScreen user={user} />}
+    </AppShell>
   )
 }
 
