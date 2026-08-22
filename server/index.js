@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRouter = require('./routes/auth');
 const tripsRouter = require('./routes/trips');
 const stopsRouter = require('./routes/stops');
+const activitiesRouter = require('./routes/activities');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,6 +27,7 @@ app.get('/api/ping', (_req, res) => {
 app.use('/auth', authRouter);
 app.use('/trips', tripsRouter);
 app.use('/trips/:tripId/stops', stopsRouter);
+app.use('/trips/:tripId/stops/:stopId/activities', activitiesRouter);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`GlobeTrotter API listening on http://0.0.0.0:${PORT}`);

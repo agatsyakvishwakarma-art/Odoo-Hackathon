@@ -5,7 +5,7 @@
  * Activity shapes match server/migrations/001_schema.sql using the same camelCase
  * convention as trips/stops. There are no activity HTTP routes in the backend yet.
  */
-const USE_MOCK = true
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
 const LATENCY_MS = 350
 
 const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
@@ -349,36 +349,40 @@ export async function addStop(tripId, data) {
   )
 }
 
-export async function listActivities(stopId) {
+export async function listActivities(tripId, stopId) {
   return call(
     () =>
       mockCall(() => {
         requireMockAuth()
-        const stop = mockStops.find((s) => s.id === Number(stopId))
+        const stop = mockStops.find(
+          (s) => s.id === Number(stopId) && s.tripId === Number(tripId),
+        )
         if (!stop) throw { error: 'Stop not found', status: 404 }
         const activities = mockActivities
           .filter((a) => a.stopId === Number(stopId))
           .map(formatActivity)
         return { activities }
       }),
-    () => liveRequest(`/stops/${stopId}/activities`),
+    () => liveRequest(`/trips/${tripId}/stops/${stopId}/activities`),
   )
 }
 
-export async function addActivity(stopId, data) {
+export async function addActivity(tripId, stopId, data) {
   const { name, category, cost, durationMinutes, notes } = data
   return call(
     () =>
       mockCall(() => {
         requireMockAuth()
-        const stop = mockStops.find((s) => s.id === Number(stopId))
+        const stop = mockStops.find(
+          (s) => s.id === Number(stopId) && s.tripId === Number(tripId),
+        )
         if (!stop) throw { error: 'Stop not found', status: 404 }
         if (!name || !category) {
           throw { error: 'name and category are required', status: 400 }
         }
         if (!ACTIVITY_CATEGORIES.includes(category)) {
           throw {
-            error: "category must be one of: transport, stay, activities, meals",
+            error: 'category must be one of: transport, stay, activities, meals',
             status: 400,
           }
         }
@@ -398,7 +402,7 @@ export async function addActivity(stopId, data) {
         return { activity: formatActivity(activity) }
       }),
     () =>
-      liveRequest(`/stops/${stopId}/activities`, {
+      liveRequest(`/trips/${tripId}/stops/${stopId}/activities`, {
         method: 'POST',
         body: {
           name,

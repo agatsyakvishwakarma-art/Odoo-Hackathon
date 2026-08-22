@@ -31,7 +31,7 @@ export default function ItineraryBuilderScreen({ trip }) {
     setStops(nextStops)
     const byStop = {}
     for (const stop of nextStops) {
-      const { activities } = await listActivities(stop.id)
+      const { activities } = await listActivities(trip.id, stop.id)
       byStop[stop.id] = activities
     }
     setActivitiesByStop(byStop)
@@ -87,7 +87,7 @@ export default function ItineraryBuilderScreen({ trip }) {
     }
     setActivityPending(true)
     try {
-      await addActivity(Number(stopId), {
+      await addActivity(trip.id, Number(stopId), {
         name: activityName,
         category,
         cost: Number(cost),

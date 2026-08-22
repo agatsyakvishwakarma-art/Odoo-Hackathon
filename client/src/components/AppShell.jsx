@@ -1,13 +1,26 @@
+function GlobeMark() {
+  return (
+    <span className="gt-sidenav-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="16" fill="#14b8a6" />
+        <circle cx="16" cy="16" r="7" stroke="#fff" strokeWidth="1.8" />
+        <ellipse cx="16" cy="16" rx="3" ry="7" stroke="#fff" strokeWidth="1.4" />
+        <path d="M9 16h14M10.4 12.4h11.2M10.4 19.6h11.2" stroke="#fff" strokeWidth="1.3" />
+      </svg>
+    </span>
+  )
+}
+
 const NAV = [
   {
     id: 'dashboard',
     label: 'Dashboard',
     icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M4 4h7v9H4V4zm9 0h7v5h-7V4zM4 15h7v5H4v-5zm9-4h7v9h-7v-9z"
-        />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <rect x="3" y="3" width="8" height="8" rx="1.5" />
+        <rect x="13" y="3" width="8" height="8" rx="1.5" />
+        <rect x="3" y="13" width="8" height="8" rx="1.5" />
+        <rect x="13" y="13" width="8" height="8" rx="1.5" />
       </svg>
     ),
   },
@@ -15,73 +28,112 @@ const NAV = [
     id: 'trips',
     label: 'My Trips',
     icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h3v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7h3zm2 0h8V5H8v2z"
-        />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="12" r="9" />
+        <polygon points="12,3 14.5,9 21,12 14.5,15 12,21 9.5,15 3,12 9.5,9" />
       </svg>
     ),
   },
   {
-    id: 'create',
-    label: 'New trip',
+    id: 'plan',
+    label: 'Plan',
     icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5z" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M3 10h18M8 3v4M16 3v4" />
       </svg>
     ),
   },
   {
-    id: 'itinerary',
-    label: 'Itinerary',
+    id: 'budget',
+    label: 'Budget',
     icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7zm0 9.5A2.5 2.5 0 1 0 12 6a2.5 2.5 0 0 0 0 5.5z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: 'profile',
-    label: 'Profile',
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"
-        />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <rect x="2" y="6" width="20" height="12" rx="2" />
+        <circle cx="12" cy="12" r="2.5" />
+        <path d="M6 10v4M18 10v4" />
       </svg>
     ),
   },
 ]
 
-export default function AppShell({ user, active, onNavigate, children }) {
+export default function AppShell({
+  user,
+  active,
+  search,
+  notice,
+  onSearchChange,
+  onSearch,
+  onNavigate,
+  onLogout,
+  children,
+}) {
   return (
-    <div className="vf-app">
-      <aside className="vf-sidebar">
-        <div className="vf-brand">
-          <div className="vf-brand-mark">VF</div>
-          <span>Voyage Flux</span>
+    <div className="gt-shell">
+      <aside className="gt-sidenav">
+        <div className="gt-sidenav-brand">
+          <GlobeMark />
+          <span>GlobeTrotter</span>
         </div>
-        <nav className="vf-nav" aria-label="Main">
+        <nav className="gt-sidenav-nav" aria-label="Main">
           {NAV.map((item) => (
             <button
               key={item.id}
               type="button"
-              className={`vf-nav-item ${active === item.id ? 'is-active' : ''}`}
+              className={`gt-sidenav-item ${active === item.id ? 'is-active' : ''}`}
               onClick={() => onNavigate(item.id)}
             >
-              <span className="vf-nav-icon">{item.icon}</span>
-              <span>{item.label}</span>
+              {item.icon}
+              {item.label}
             </button>
           ))}
         </nav>
-        <p className="vf-user">{user?.name}</p>
+        <button type="button" className="gt-sidenav-user" onClick={() => onNavigate('profile')}>
+          <img src="/login/avatar.jpg" alt="" />
+          <span>
+            <strong>{user?.name}</strong>
+            <em>View Profile</em>
+          </span>
+        </button>
       </aside>
-      <main className="vf-main">{children}</main>
+
+      <div className="gt-workspace">
+        <header className="gt-topbar">
+          <form
+            className="gt-search"
+            onSubmit={(event) => {
+              event.preventDefault()
+              onSearch(search)
+            }}
+          >
+            <input
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="Search itineraries..."
+              aria-label="Search itineraries"
+            />
+            <button type="submit" aria-label="Search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3-3" />
+              </svg>
+            </button>
+          </form>
+          <details className="gt-bell">
+            <summary aria-label="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M6 8a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7" />
+                <path d="M10 18a2 2 0 0 0 4 0" />
+              </svg>
+            </summary>
+            <div className="gt-bell-panel">{notice || 'No new notifications.'}</div>
+          </details>
+          <button type="button" className="gt-topbar-logout" onClick={onLogout}>
+            Log out
+          </button>
+        </header>
+        <div className="gt-content">{children}</div>
+      </div>
     </div>
   )
 }

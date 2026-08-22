@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { createTrip } from '../api/mockClient'
 
-export default function CreateTripScreen({ onCreated }) {
-  const [name, setName] = useState('')
+export default function CreateTripScreen({ onCreated, initial }) {
+  const [name, setName] = useState(initial?.name || '')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState(initial?.description || '')
   const [error, setError] = useState('')
   const [pending, setPending] = useState(false)
 
