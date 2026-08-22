@@ -118,66 +118,73 @@ spacing:
   component-gap: 12px
 ---
 
-Screen-by-screen UI references: [README.md](./README.md).
+# Screen: Landing (unauthenticated)
+
+**Source:** `client/src/screens/LandingScreen.jsx`  
+**Chrome:** Full-bleed marketing page. No AppShell.
 
 ## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+The landing page is an **optimistic, editorial** introduction to Yatrik. It keeps the Voyage Flux **Minimalist / Modern Corporate** system but uses more white space, a larger hero, and social proof instead of dense planning tools.
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+Personality is navigational and lightweight: one clear promise (“One app for all your travel planning needs”), two primary actions, then traveler reviews. The YATRIK wordmark (navy `#003366`, gold `#D4AF37` on the letter A) is the brand lockup above the product teal.
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
+The color palette is anchored by a vibrant **Teal (#14B8A6)** for Sign up and Start planning.
 
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal):** Sign up, Start planning, and other conversion CTAs.
+- **Navy / Gold:** Logo mark and wordmark only (not used for body text at scale).
+- **Secondary (Coral):** Unused on this page except as a future “delight” accent.
+- **Neutral Surface:** Page reads as a bright marketing canvas; review cards sit on **White (`#FFFFFF`)** against a soft gray field (`#F8F9FA`).
+- **Star gold `#FFB400`:** Five-star ratings on review cards.
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** is the exclusive typeface.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Hero title uses `headline-xl` (48px / 700 / −0.02em).
+- Hero subtitle uses `body-lg` (18px / 28px).
+- Section title “What travelers are raving about” uses `headline-lg`.
+- Review names are `label-md`; quotes are `body-sm` / `body-md`.
+- Logo lockup is display letter-spacing (YATRIK 20px / 800); tagline is 7px uppercase.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
+Fixed-fluid marketing layout, max content ~1440px, 48px desktop margins.
 
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- **Top bar:** Logo + tagline left; text links (Home, Travel guides, Hotels); Log in (flat) + Sign up (solid) right.
+- **Hero:** Copy column + large media with caption (“Your itinerary and your map in one view”).
+- **Reviews:** Masonry of six quote cards, 24px gutters, 40px section gap.
+- **Breakpoints:** Desktop 1280px+; tablet 768–1279px stacks hero media under copy; mobile &lt;768px, 16px margins, stacked nav actions.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Review cards rest on ambient shadow (10px blur, 4% slate). Hero media is a large rounded container with a caption block overlapping or sitting below. Nav is flat (no floating sidebar). Hover on cards increases shadow to 20px / 8%.
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- Hero media and review cards: `rounded-2xl` (24px).
+- Buttons: `rounded-lg` (16px); large CTAs keep the same radius with extra padding.
+- Avatars: `rounded-full`.
+- Photos: `overflow-hidden` matching parent radius.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Marketing Navbar
+Logo mark (32px) + YATRIK + tagline “Journey Beyond Limits”. Right cluster: flat **Log in**, solid teal **Sign up**.
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Hero
+`headline-xl` promise, supporting paragraph, **Start planning** (primary) and **Get the app** (outline + arrow).
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Hero Media
+Destination photograph with caption title + body explaining itinerary and map in one view.
+
+### Review Card
+Circular initial avatar, name, optional role, five gold stars, quote body. White `surface-white` container.
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+Primary = solid Teal / White text. Outline = 1px neutral border. No form fields on this screen.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **Open Log in** — Sets auth mode to login and shows Auth screen.
+- **Open Sign up / Start planning** — Sets auth mode to signup and shows Auth screen.
+- **Marketing navigation** — Home, Travel guides, Hotels (visual links).
+- **Get the app** — Visual CTA (store flow not wired).
+- **Social proof** — Six static traveler reviews with 5-star ratings.
+- **No session** — This screen is shown only when no JWT/user is stored.

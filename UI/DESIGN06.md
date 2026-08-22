@@ -118,64 +118,86 @@ spacing:
   component-gap: 12px
 ---
 
-## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+# Screen: Budget + Profile (Passport)
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+**Source:** `client/src/screens/BudgetScreen.jsx`, `client/src/screens/ProfileScreen.jsx`  
+**Screen ids:** `budget`, `profile`
+
+## Brand & Style
+These screens are **analytics and identity**. Budget is a financial overview: total spent, category donut, transaction table. Profile is framed as a **digital passport** — stats, milestones, map teaser, climate and document status. Both keep white cards on `#F8F9FA`, teal for progress/rings, and coral/orange for secondary metrics (flights, food). High-density numbers sit in breathable containers so the UI still feels lightweight.
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
-
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal `#0F766E` / `#14B8A6`):** Budget progress, donut Flights segment, passport ring, Export Data, Active badge.
+- **Accommodation:** `#9F1239` (secondary/coral family).
+- **Food & Drink:** `#FB923C` (tertiary/warm).
+- **Transport / Activities:** `#FBBF24` (warning amber).
+- **Critical red / orange:** Profile “Flights” and “Miles” accents.
+- **Neutral:** White cards, Deep Slate labels, gray secondary figures (“/ 195”).
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** only.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Budget kicker `label-sm` “Financial Overview”; H1 `headline-lg` “All Trips 2024”.
+- Total spent: oversized numeral (display) + cents `body-md`.
+- Table headers: `label-sm` uppercase.
+- Passport H1 `headline-lg` + Active pill; stats values `headline-md`; milestone dates `label-sm`.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
-
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- **Budget:** Header row (copy | currency + Add Expense). Body **~40/60**: summary + donut | transactions. 24px gap.
+- **Passport:** Header (title | Share + Export). Body **~45/55**: stats + milestones | map + climate/status row.
+- Desktop 48px margins; tablet stacks columns; mobile single column, table becomes stacked rows.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Summary, donut, and transaction cards rest with ambient shadow. Map panel is a media container (image/texture) with floating control cluster. Ring charts are flat SVG (no fake 3D). Share is ghost; Export is solid (higher visual weight).
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- All panels: `rounded-2xl`.
+- Currency and Add Expense: `rounded-lg`.
+- Category pills: `rounded-full`.
+- Map zoom buttons: round or `rounded-lg`.
+- Passport Active badge: pill.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Budget header
+Kicker, title, description. USD select (visual). **Add Expense** → plan/itinerary.
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Total Spent card
+Amount, budget progress vs **$5,000** (display cap), remaining copy.
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Breakdown
+SVG donut, center “N CATEGORIES”, legend with color dots, amount and %.
+
+### Transactions
+Search expenses, filter icon (visual), columns Description / Category / Location / Amount, grouped by trip name, category icon + pill.
+
+### Passport header
+Watermark “DIGITAL”, title, Active, supporting copy, Share Profile (ghost), Export Data (primary).
+
+### Global Stats
+Countries, Flights, Miles, CO2 Offset, World Explorer progress bar.
+
+### Milestones
+Icon + date + title + description; View All.
+
+### Map teaser
+Zoom in/out/center. Overlay NEXT DESTINATION Reykjavík, “In 14 days”.
+
+### Status pair
+Climate Preference (Tropical). Passport Valid Exp 2028 + 75% ring.
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+Teal primary. Search field 1px → 2px teal focus.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **Aggregate costs** — Load all member trips → stops → activities; include rows with `cost`; sum total.
+- **Category breakdown** — Group into Flights, Accommodation, Food & Drink, Activities, Transport (mapped from activity `category` where possible).
+- **Budget progress** — Percent of hardcoded $5,000 ceiling; remaining dollars.
+- **Search transactions** — Filter by activity name.
+- **Empty budget** — CTA Plan a trip if no costs.
+- **Add Expense** — Navigates to plan (create or itinerary), does not open a ledger modal.
+- **Export Data** — Downloads `globetrotter_export.json` from `listTrips`.
+- **Profile identity** — Uses session `user` for shell; passport stats/milestones/map are **display placeholders** (not queried from Postgres).
+- **Share Profile, currency, map zoom, filter** — UI only.
+- **Collaboration roles** — Budget includes any trip the user is a member of (owner or editor).

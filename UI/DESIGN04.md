@@ -118,64 +118,76 @@ spacing:
   component-gap: 12px
 ---
 
-## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+# Screen: My Trips + Destinations
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+**Source:** `client/src/screens/MyTripsScreen.jsx`, `client/src/screens/DestinationsScreen.jsx`  
+**Screen ids:** `trips`, `destinations`
+
+## Brand & Style
+These screens are **gallery-first**. My Trips is a personal archive (featured next trip, secondary card, past grid). Destinations is inspiration: four city posters that start a trip. Both use structured white cards, destination photography, and teal only on primary actions and active chrome. Information density stays low so images carry the destination emotion.
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
-
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal):** New trip, View Itinerary, View All, destination hover/focus, progress fill.
+- **Neutral Surface:** `#F8F9FA` page; white cards.
+- **Deep Slate:** Titles and dates.
+- **On-image white:** Overlay titles on secondary and past cards.
+- **Progress:** Teal fill on a light track (featured card 25% Planned — display value).
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** only.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Page titles: `headline-lg` (“Upcoming Trips”, “Browse destinations”).
+- Subtitles: `body-md`.
+- Featured title: `headline-md`.
+- Past card name: `label-md`; date `body-sm`.
+- Destination city `headline-md` + country `body-sm` + blurb `body-sm`.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
+12-column content, 24px gutters, 48px desktop margins.
 
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- **My Trips:** Featured + secondary in a 2-column band; **Past Trips** heading + 3–4 cards per row.
+- **Destinations:** 4 columns desktop, 2 tablet, 1 mobile.
+- **Empty:** Single white card + primary button, not a blank page.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Gallery cards rest (10px / 4%). Hover = 20px / 8% and slight lift. Image overlays use a dark gradient so white type stays readable. Nav remains the AppShell top bar (flat).
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- All trip and destination cards: `rounded-2xl`.
+- Images: `rounded-t-2xl` or full card `overflow-hidden`.
+- “In 14 days” and itinerary CTA: `rounded-full` / `rounded-lg`.
+- Avatars on featured footer: `rounded-full`.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Upcoming header
+Title + “Your next adventures await.” Header search (shell) filters this list.
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Featured trip card
+Large image (`/login/alps.jpg`), countdown badge, `headline-md` name, date row with calendar icon, collaborator avatar, **View Itinerary**, progress bar + “25% Planned”.
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Secondary trip card
+`/dashboard/tokyo.jpg`, title and dates on overlay, short description, chevron.
+
+### Past trip cards
+Cycling images (bali, paris, marrakech), name + start date. **View All** text control.
+
+### Destination card
+Photo, city + country, blurb. Clickable button covering the card.
+
+### Empty / error
+Loading line; error text; empty copy + **New trip**.
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+Primary teal for New trip. Cards themselves are the hit target.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **List member trips** — `GET /trips` for the signed-in user (owner/editor via `trip_members`).
+- **Search filter** — Client filter on name and description from shell search.
+- **Open trip** — Featured, secondary, or past card sets `trip` and opens itinerary.
+- **Create from empty** — **New trip** → create screen.
+- **Browse destinations** — Kyoto, Lisbon, Reykjavik, Marrakech with local images.
+- **Prefill create** — Picking a city sets draft `{ name: "{City} trip", description: blurb }` and navigates to create.
+- **View All / countdown badge** — Visual (badge text is static “In 14 days”).
+- **Progress percent** — Visual 25%, not computed from stops/activities.

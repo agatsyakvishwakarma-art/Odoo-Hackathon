@@ -118,64 +118,84 @@ spacing:
   component-gap: 12px
 ---
 
-## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+# Screen: App Shell + Dashboard
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+**Source:** `client/src/components/AppShell.jsx`, `client/src/screens/DashboardScreen.jsx`  
+**Screen ids:** `dashboard` (default after login)
+
+## Brand & Style
+Authenticated Yatrik is a **live planning console**. Voyage Flux specifies a 280px left sidebar; this product uses a **top navigation bar** plus footer so the main canvas stays wide. The dashboard is the home: greeting, next trip hero, departure snippet, and a short checklist. Tone is professional, optimistic, and high-legibility (Deep Slate on `#F8F9FA`).
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
-
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal):** Plan New Trip, active nav, weather/date badges, checklist accents.
+- **Navy / Gold:** YATRIK lockup in header and footer only.
+- **Muted pills:** Browse Destinations (outline / gray fill).
+- **Warning amber / critical red:** Reserved for budget/profile elsewhere; dashboard uses teal confirmation badges.
+- **Containers:** White cards on gray canvas. Nav is white with 1px `#E5E7EB` bottom border.
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** only.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Dashboard H1: `headline-lg` “Welcome back, {firstName}.”
+- Subtitle: `body-md` countdown or empty/error copy.
+- Hero trip name: `headline-md` / `headline-lg`.
+- Kickers (DEPARTURE FLIGHT, PRE-TRIP CHECKLIST): `label-sm` uppercase tracking.
+- Nav links: `label-md`. Footer headings: `label-md`; footer body: `body-sm`.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
+Fixed-fluid hybrid. Main max 1440px, 48px desktop margins, 24px gutters.
 
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- **Top nav:** Brand | Dashboard · My Trips · Explore | search · bell · avatar.
+- **Main:** Page content (dashboard grid below).
+- **Footer:** Four columns — brand, Product, Resources, Get the App.
+- **Dashboard Up Next:** ~60/40 grid — hero trip image | flight + checklist stack.
+- **Breakpoints:** Tablet compresses search; mobile stacks hero above side cards, nav collapses.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Nav and footer are flat frames. Hero and side cards use ambient shadow; hero hover deepens shadow. Chat bubble is a floating teal circle (higher elevation).
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- Hero and cards: `rounded-2xl`; hero photo `rounded-t-2xl` or full-bleed inside overflow-hidden.
+- Search and pills: `rounded-full` or `rounded-lg`.
+- Avatar: `rounded-full`.
+- Status badges: pill.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Top Navigation
+YATRIK mark + wordmark. Links: Dashboard, My Trips, Explore. Plan/itinerary/create/destinations highlight **My Trips**. Search placeholder “Search place or user…”. Bell panel shows `notice`. Avatar dropdown: Profile, Log out.
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Footer
+Brand blurb, language select, product/resource links, store badges.
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Help Chat Bubble
+Fixed bottom-right, chat icon, aria-label Help and Support.
+
+### Dashboard Header
+Greeting + contextual subtitle. **Browse Destinations** (muted) and **Plan New Trip** (solid teal + plus).
+
+### Hero Trip Card
+City photo (kyoto/lisbon/reykjavik/marrakech mapping), live temperature overlay, Confirmed / In progress badge, date range, title, description. Entire card opens itinerary.
+
+### Flight Card
+Kicker + path OUT → city code/date. Empty state prompts opening itinerary.
+
+### Checklist
+Shows 3 of 5 items; “n of 5 done”; checkboxes persist in `localStorage` (`gt-checklist-{tripId}`).
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+Primary teal / white. Search input: 1px border, 2px teal focus.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **Session shell** — All logged-in pages render inside AppShell.
+- **Navigate** — Dashboard, My Trips, Explore (destinations/plan), Profile, Log out (clears JWT and user).
+- **Search trips** — Submit search → My Trips filtered by name/description.
+- **Notifications** — Bell shows dashboard notice (e.g. “Your trip to {city} is in N days.”).
+- **Load upcoming trip** — `listTrips` + pick soonest future (or latest); load stops and first transport activity.
+- **Live weather** — Open-Meteo geocode + current temp for first city.
+- **Open itinerary** — Hero / “View full itinerary” sets current trip and goes to itinerary (or create if none).
+- **Browse destinations / Plan new trip** — Route to those screens.
+- **Checklist** — Toggle and persist locally (not on Postgres).
+- **Empty / error / loading** — Copy for no trips, API failure, and boot “Connecting to Yatrik API…”.
+- **Chat / store / footer links** — Visual.

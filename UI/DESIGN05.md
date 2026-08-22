@@ -118,64 +118,82 @@ spacing:
   component-gap: 12px
 ---
 
-## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+# Screen: Create Trip + Itinerary Builder
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+**Source:** `client/src/screens/CreateTripScreen.jsx`, `client/src/screens/ItineraryBuilderScreen.jsx`  
+**Screen ids:** `create`, `itinerary`
+
+## Brand & Style
+Planning tools are the densest Voyage Flux screens: **systematic containers**, generous field spacing, and a split view for the itinerary. Create Trip feels like a setup wizard (essentials + cover + style). Itinerary feels like a live log: timeline on the left, capture forms on the right. Personality stays lightweight — teal waypoints and chips, never a cluttered spreadsheet.
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
-
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal):** Save & Start Planning, Add stop, Add activity, active travel-style chip, timeline rail (2px), waypoint circles.
+- **Neutral Surface:** Gray page, white `rounded-2xl` cards.
+- **Category chips:** Tinted per activity category (`transport`, `stay`, `activities`, `meals`).
+- **Error:** `#BA1A1A` under forms.
+- **Draft pill:** Muted outline, not a second primary.
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** only.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Create hero: kicker `label-sm` + `headline-lg` “New Adventure”.
+- Card titles: `headline-sm` / `headline-md`. Card sub: `body-sm`.
+- Itinerary page title: trip `headline-lg`; date range `body-md`.
+- Stop titles: `headline-sm` (“1. Kyoto”). Field labels: `label-md`.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
-
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- **Create:** Hero band, then two columns (essentials | cover + style), sticky/footer actions Cancel + Save. 24px column gap, 12px field gap.
+- **Itinerary:** **40/60 or 50/50 split** — scrollable timeline | stacked Add stop + Add activity cards.
+- Desktop 48px margins; tablet stacks split; mobile single column, forms below timeline.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Cards rest on ambient shadow. Timeline is flat with a teal spine. Focus is communicated by input glow, not extra card elevation. Dropzone uses a dashed outline instead of a fill.
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- Cards and dropzone: `rounded-2xl`.
+- Inputs, textarea, primary buttons: `rounded-lg`.
+- Style chips and activity chips: `rounded-full`.
+- Timeline nodes: `rounded-full` on a 2px teal vertical line.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Create hero
+Kicker “CREATE NEW ITINERARY”, title, **Auto-saving drafts…** pill (visual).
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Trip Essentials
+Name (pin icon), start/end dates (calendar icons), description textarea.
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Cover Photo
+Dashed dropzone, JPG/PNG/WEBP, max 5MB copy (visual).
+
+### Travel Style
+Chips: Leisure, Adventure, Business, Family, Cultural. Pace range Relaxed → Packed (UI state).
+
+### Create actions
+Ghost Cancel. Primary Save & Start Planning + arrow; pending “Saving…”.
+
+### Itinerary timeline
+Stops with sequence, city, dates; activity chips (name · minutes · cost). Empty copy if none.
+
+### Add stop form
+City, arrival, departure, sequence, submit.
+
+### Add activity form
+Assign to city, name, category select, cost, duration, notes, submit.
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+Teal primary. 1px border → 2px teal focus + glow.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **Create trip** — `POST /trips` with name, startDate, endDate, description; creator becomes `trip_members` owner; then open itinerary.
+- **Prefill from destinations** — Name and description from picked city.
+- **Cancel** — Discard draft, return to My Trips.
+- **Validation** — Required name and dates; server 400 if missing; `end_date >= start_date` in schema.
+- **List stops** — `GET /trips/:id/stops` ordered by sequence.
+- **Add stop** — City, arrival, departure, sequence; unique sequence per trip.
+- **List / add activities** — Per stop: name, category (`transport|stay|activities|meals`), cost, duration, notes.
+- **Membership** — Stop/activity routes require authenticated trip member.
+- **Guard** — Activity submit blocked until a stop exists.
+- **Cover upload, auto-save, style, pace** — UI only (not stored on Postgres).
+- **Map focus panel** — Design-system right panel is forms here, not a live map.

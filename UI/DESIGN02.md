@@ -118,64 +118,82 @@ spacing:
   component-gap: 12px
 ---
 
-## Brand & Style
-The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
+# Screen: Auth — Log in / Sign up
 
-The desktop environment is characterized by expansive white space and a "live" interface that feels like a professional productivity tool for travelers. The aesthetic is clean and systematic, utilizing structured containers to organize complex multi-day itineraries and logistical data into a cohesive, breathable interface.
+**Source:** `client/src/screens/AuthScreen.jsx`  
+**Chrome:** Split hero + form. No AppShell.
+
+## Brand & Style
+Auth is a **calm productivity gateway**: left side is cinematic travel brand, right side is a high-clarity form. The page stays minimalist and systematic so credentials feel trustworthy. YATRIK lockup sits on the hero; the form speaks in Deep Slate with teal as the only strong action color.
+
+Login and signup share one layout. Signup adds a Name field; copy and submit label swap. A “Traveler Journeys” card and “Did you know?” tip add delight without cluttering the form.
 
 ## Colors
-The color palette is anchored by a vibrant **Teal (#14B8A6)**, serving as the primary driver for navigation, active states, and focus indicators. 
-
-- **Primary (Teal):** The core brand anchor. Used for primary CTAs, sidebar active states, and timeline waypoints.
-- **Secondary (Coral):** Reserved for "delight" moments, seasonal highlights, or secondary interactive elements.
-- **Neutral Surface:** A soft gray (`#F8F9FA`) background reduces eye strain during long-form planning, while **Deep Slate (#1F2937)** is the standard for high-legibility typography.
-- **Container Strategy:** White (`#FFFFFF`) is used for primary content containers (cards, sidebars, panels) to create a clear visual distinction against the neutral background.
+- **Primary (Teal):** Log In / Sign Up submit, focus rings, text links (Sign Up / Log In switch).
+- **Hero:** Photographic overlay; back control is white at 20% on imagery.
+- **Error:** `#BA1A1A` / `#EF4444` for API and validation messages.
+- **Neutral Surface:** Form panel is White on `#F8F9FA` context.
+- **Social buttons:** White fill, outline `#BBCAC6`, brand logos for Google / Apple.
 
 ## Typography
-**Inter** is the exclusive typeface, chosen for its neutral, systematic character and excellent legibility at all scales. 
+**Inter** only.
 
-The desktop hierarchy is more expansive than mobile, introducing `headline-xl` at 48px for major destination landing pages. Desktop-specific adjustments focus on generous line heights for body text to maintain readability across wider content blocks. Functional labels use semibold weights to differentiate interactive UI elements from editorial descriptions.
+- Hero headline: `headline-lg` / approaching `headline-xl` (“Your journey begins here.”).
+- Panel title: `headline-md` / `headline-lg` (“Welcome back” / “Create your account”).
+- Field labels: `label-md`. Helper and switch copy: `body-sm`.
+- Journey overlay title: `headline-sm`. Tip body: `body-sm`.
 
 ## Layout & Spacing
-The layout follows a **Fixed-Fluid Hybrid** model optimized for travel productivity.
+Desktop **50/50 split**. Form column max-width inside the panel, 24px internal gutters, 12px between fields.
 
-- **Sidebar Navigation:** A fixed 280px sidebar on the left handles primary navigation and trip switching.
-- **12-Column Grid:** The main content area utilizes a 12-column grid with 24px gutters. For trip galleries, use a multi-column grid (3 or 4 cards per row).
-- **Split-View Layouts:** For planning tools, the screen is split 40/60 or 50/50 between an itinerary list and a map/media panel.
-- **Breakpoints:**
-  - **Desktop:** 1280px+ (12 columns, 48px margins)
-  - **Tablet:** 768px - 1279px (8 columns, 24px margins, sidebar collapses to an icon rail)
-  - **Mobile:** <768px (4 columns, 16px margins, bottom navigation)
+- Hero: brand lockup, optional Back to Home pill, marketing copy.
+- Panel: welcome header → form → OR CONTINUE WITH → social row → mode switch → journey card → tip.
+- Tablet: stack form first or keep split with reduced hero.
+- Mobile: form-first, hero condensed or hidden below fold.
 
 ## Elevation & Depth
-This design system uses **Tonal Layering** combined with **Ambient Shadows** to define hierarchy.
-
-- **Surface Tiers:** The base layer is the soft gray background. Primary content lives on white `surface-white` containers.
-- **Ambient Shadows:** Cards and panels use a very diffused, low-opacity shadow (10px blur, 4% opacity, Slate tint) to feel "resting." 
-- **Interactive Depth:** On hover, elements transition to a more pronounced shadow (20px blur, 8% opacity) to provide tactile confirmation.
-- **Navigation Depth:** The sidebar remains flat or uses a subtle 1px border (`#E5E7EB`) to feel integrated into the application frame rather than floating.
+Form panel is a flat white surface (or light shadow at the split). Journey card uses ambient shadow and a dark gradient overlay for text. Inputs lift only via focus glow, not extra shadow.
 
 ## Shapes
-The design maintains a **Rounded** aesthetic to feel approachable and modern. 
-
-- **Main Containers:** All cards, trip modals, and planning panels use `rounded-2xl` (1.5rem / 24px) for a soft, professional look.
-- **Interactive Elements:** Buttons and form inputs use `rounded-lg` (1rem / 16px).
-- **Media:** Thumbnails and photos must always match the corner radius of their parent container (using `overflow-hidden`) or default to `rounded-xl`.
-- **System Icons:** Status badges and category chips use a full pill shape (`rounded-full`) to differentiate them from square-ish action buttons.
+- Inputs and primary submit: `rounded-lg` (16px).
+- Back control and social buttons: pill or `rounded-lg`.
+- Journey photo: `rounded-2xl` + `overflow-hidden`.
+- Avatars in quote: `rounded-full`.
 
 ## Components
 
-### Sidebar Navigation
-The desktop sidebar uses the `surface-white` background. Active states are indicated by a Primary Teal vertical bar on the left edge and a low-opacity teal background fill for the menu item.
+### Hero Brand
+48px mark + YATRIK (`#003366` / gold A) + tagline. Headline and supporting paragraph.
 
-### Trip Cards
-Desktop trip cards feature a multi-column layout. They include a `headline-md` title, a `body-sm` date range, and a full-width image at the top with `rounded-t-2xl` corners.
+### Back to Home
+Absolute pill on hero; returns to Landing.
 
-### Split-View Planning Panels
-Planning tools utilize a vertical split. The left panel contains the scrollable itinerary timeline, while the right panel (the "Focus Panel") displays high-resolution maps or destination details.
+### Credential Form
+Optional Name (signup). Email with mail icon. Password with lock, show/hide eye, Forgot Password (login only). Error line. Full-width teal submit with arrow; pending label “Please wait…”.
+
+### Social Continue
+Divider “OR CONTINUE WITH”. Google and Apple outline buttons (visual unless OAuth is wired).
+
+### Mode Switch
+Text + teal link toggles login ↔ signup and clears error.
+
+### Traveler Journeys
+Image `/login/alps.jpg`, overlay title, quote + `/login/avatar.jpg`.
+
+### Did you know?
+Lightbulb icon, bold kicker, short travel fact.
 
 ### Buttons & Inputs
-Primary buttons are solid Teal with White text. Inputs use a 1px neutral border that transforms into a 2px Teal border with a soft outer glow on focus.
+1px outline → **2px teal + soft glow** on focus. Primary = teal fill / white text.
 
-### Itinerary Timeline
-A vertical 2px Teal line connects travel waypoints. Each waypoint is a `rounded-full` circle, often containing a category icon (e.g., plane, hotel, or fork/knife).
+## Features
+
+- **Sign up** — `POST /auth/signup` with name, email, password; bcrypt hash; JWT 7 days; persist token + user; enter AppShell.
+- **Log in** — `POST /auth/login`; compare hash; same session persist.
+- **Session restore** — Token in localStorage; `GET /auth/me` on boot; invalid token clears session.
+- **Password visibility** — Toggle show/hide.
+- **Duplicate email** — 409 “Email already registered”.
+- **Invalid credentials** — 401 generic error (no user enumeration).
+- **Required fields** — Browser + API 400 if missing.
+- **Back to Landing** — Closes auth without destroying a session (none yet).
+- **Google / Apple / Forgot Password** — UI only.
