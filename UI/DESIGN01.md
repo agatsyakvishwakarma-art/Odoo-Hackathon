@@ -118,6 +118,8 @@ spacing:
   component-gap: 12px
 ---
 
+Screen-by-screen UI references: [README.md](./README.md).
+
 ## Brand & Style
 The design system transitions from a mobile-first approach to a robust, **Modern Corporate** desktop experience. It maintains a **Minimalist** foundation that prioritizes high-density information management without sacrificing the "navigational, optimistic, and lightweight" personality. 
 

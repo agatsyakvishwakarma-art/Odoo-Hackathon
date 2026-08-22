@@ -46,14 +46,16 @@ function LoginArrowIcon() {
   )
 }
 
-function GlobeMark() {
+function YatrikMark() {
   return (
-    <span className="gt-logo-mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none">
-        <rect width="32" height="32" rx="8" fill="#fff" />
-        <circle cx="16" cy="16" r="8" stroke="#14b8a6" strokeWidth="2" />
-        <ellipse cx="16" cy="16" rx="3.5" ry="8" stroke="#14b8a6" strokeWidth="1.6" />
-        <path d="M8 16h16M9.5 12.2h13M9.5 19.8h13" stroke="#14b8a6" strokeWidth="1.4" />
+    <span className="gt-logo-mark" aria-hidden="true" style={{ display: 'inline-flex' }}>
+      <svg viewBox="0 0 100 100" width="48" height="48">
+        <circle cx="50" cy="50" r="48" fill="#fff" stroke="#003366" strokeWidth="2" />
+        <path d="M 10 70 L 30 50 L 50 65 L 70 40 L 90 70 Z" fill="#003366" />
+        <path d="M 75 70 L 75 55 L 70 65 L 75 60 L 75 50 L 80 60 L 75 65 Z" fill="#003366" stroke="#003366" strokeWidth="2" />
+        <circle cx="65" cy="35" r="20" fill="#003366" />
+        <circle cx="30" cy="40" r="10" fill="#d4af37" />
+        <text x="15" y="80" fontSize="45" fill="#003366" fontFamily="sans-serif" fontStyle="italic" fontWeight="bold">Yk</text>
       </svg>
     </span>
   )
@@ -81,8 +83,8 @@ function AppleLogo() {
   )
 }
 
-export default function AuthScreen({ onAuthenticated }) {
-  const [mode, setMode] = useState('login')
+export default function AuthScreen({ onAuthenticated, defaultMode = 'login', onBack }) {
+  const [mode, setMode] = useState(defaultMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
@@ -107,11 +109,28 @@ export default function AuthScreen({ onAuthenticated }) {
 
   return (
     <div className="gt-login">
-      <section className="gt-hero" aria-label="GlobeTrotter">
-        <div className="gt-hero-brand">
-          <GlobeMark />
-          <span>GlobeTrotter</span>
+      <section className="gt-hero" aria-label="Yatrik">
+        <div className="gt-hero-brand" style={{ display: 'flex', alignItems: 'center' }}>
+          <YatrikMark />
+          <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '12px', alignItems: 'flex-start' }}>
+            <span style={{ color: '#003366', letterSpacing: '4px', fontWeight: 'bold', fontSize: '28px', lineHeight: '1' }}>Y<span style={{ color: '#d4af37' }}>A</span>TRIK</span>
+            <span style={{ fontSize: '10px', letterSpacing: '3px', color: '#003366', textTransform: 'uppercase', marginTop: '4px' }}>
+              — Journey Beyond Limits —
+            </span>
+          </div>
         </div>
+        {onBack && (
+          <button 
+            type="button" 
+            onClick={onBack} 
+            style={{ position: 'absolute', top: 32, left: 32, background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '999px', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+          </button>
+        )}
         <div className="gt-hero-copy">
           <h1>Your journey begins here.</h1>
           <p>
@@ -221,7 +240,7 @@ export default function AuthScreen({ onAuthenticated }) {
           <p className="gt-switch">
             {mode === 'login' ? (
               <>
-                New to GlobeTrotter?{' '}
+                New to Yatrik?{' '}
                 <button
                   type="button"
                   className="gt-link"

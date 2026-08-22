@@ -13,6 +13,7 @@ import DestinationsScreen from './screens/DestinationsScreen'
 import ItineraryBuilderScreen from './screens/ItineraryBuilderScreen'
 import MyTripsScreen from './screens/MyTripsScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import LandingScreen from './screens/LandingScreen'
 import './voyage.css'
 import './shell.css'
 
@@ -31,6 +32,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [draft, setDraft] = useState(null)
   const [notice, setNotice] = useState('')
+  const [showAuth, setShowAuth] = useState(false)
+  const [authMode, setAuthMode] = useState('login')
 
   useEffect(() => {
     if (!getSessionUser()) return
@@ -63,11 +66,25 @@ function App() {
   }
 
   if (booting) {
-    return <div className="gt-boot">Connecting to GlobeTrotter API…</div>
+    return <div className="gt-boot">Connecting to Yatrik API…</div>
   }
 
   if (!user) {
-    return <AuthScreen onAuthenticated={setUser} />
+    if (showAuth) {
+      return (
+        <AuthScreen 
+          onAuthenticated={setUser} 
+          defaultMode={authMode} 
+          onBack={() => setShowAuth(false)} 
+        />
+      )
+    }
+    return (
+      <LandingScreen 
+        onLogin={() => { setAuthMode('login'); setShowAuth(true) }} 
+        onSignup={() => { setAuthMode('signup'); setShowAuth(true) }} 
+      />
+    )
   }
 
   return (
@@ -121,6 +138,10 @@ function App() {
             setDraft(null)
             setTrip(nextTrip)
             setScreen('itinerary')
+          }}
+          onCancel={() => {
+            setDraft(null)
+            setScreen('trips')
           }}
         />
       )}

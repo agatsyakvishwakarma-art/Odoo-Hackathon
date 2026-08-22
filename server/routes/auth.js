@@ -39,6 +39,7 @@ router.post('/signup', async (req, res) => {
     if (err.code === '23505') {
       return res.status(409).json({ error: 'Email already registered' });
     }
+    console.error('[signup] Error:', err.message);
     return res.status(500).json({ error: 'Failed to create account' });
   }
 });
@@ -68,7 +69,8 @@ router.post('/login', async (req, res) => {
 
     const user = formatUser(row);
     res.json({ token: signToken(user), user });
-  } catch {
+  } catch (err) {
+    console.error('[login] Error:', err.message);
     return res.status(500).json({ error: 'Failed to log in' });
   }
 });

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const pool = require('./db');
 
 const authRouter = require('./routes/auth');
 const tripsRouter = require('./routes/trips');
@@ -29,6 +30,19 @@ app.use('/trips', tripsRouter);
 app.use('/trips/:tripId/stops', stopsRouter);
 app.use('/trips/:tripId/stops/:stopId/activities', activitiesRouter);
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', async () => {
   console.log(`GlobeTrotter API listening on http://0.0.0.0:${PORT}`);
+  if (!process.env.DATABASE_URL) {
+    console.error('⚠️  WARNING: DATABASE_URL is not set. Auth and data endpoints will fail.');
+    console.error('   Copy server/.env.example to server/.env and fill in your database URL.');
+    return;
+  }
+  try {
+    await pool.query('SELECT 1');
+    console.log('✅  Database connection OK');
+  } catch (err) {
+    console.error('❌  Database connection FAILED:', err.message);
+    console.error('   Make sure PostgreSQL is running and DATABASE_URL in server/.env is correct.');
+    console.error('   Then run: npm run migrate');
+  }
 });
